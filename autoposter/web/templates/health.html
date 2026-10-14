@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Health — AutoPoster Pro{% endblock %}
+{% block content %}
+<h1>Connection Health</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Platform</th>
+            <th>Label</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for account in accounts %}
+        <tr>
+            <td>{{ account.platform }}</td>
+            <td>{{ account.label }}</td>
+            <td class="status-{{ account.status.value }}">{{ account.status.value }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="empty">No accounts configured.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

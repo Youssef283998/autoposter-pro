@@ -1,0 +1,33 @@
+AutoPoster Pro — Commercial License (PLACEHOLDER)
+
+*** THIS TEXT IS A PLACEHOLDER FOR SELLING THE PRODUCT. ***
+*** HAVE IT REVIEWED BY A QUALIFIED LAWYER BEFORE USE. ***
+
+Copyright (c) 2026 AutoPoster Pro. All rights reserved.
+
+1. Grant
+   Upon purchase, the buyer receives a non-exclusive, non-transferable license
+   to install and use AutoPoster Pro on machines they control, for their own
+   business or personal use, subject to the license tier purchased
+   (single-user, commercial, or extended/agency).
+
+2. Redistribution
+   The source code may not be redistributed, resold, sublicensed, or made
+   available as a hosted service to third parties, except as expressly granted
+   by an extended/agency license.
+
+3. No Warranty
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+4. Platform Compliance
+   The buyer is solely responsible for complying with each social platform's
+   terms of service, developer policies and automation rules when using this
+   software with their own API credentials.
+
+5. Updates and Support
+   The purchase includes the update and support window described on the sales
+   page at the time of purchase.
+
+[Full terms to be drafted by counsel.]

@@ -1,0 +1,3 @@
+# Example cron entry for AutoPoster (alternative to systemd/launchd)
+# Run every minute to check for due posts
+* * * * * cd /opt/autoposter && /usr/bin/python3 -m autoposter.cli.main run --once >> /var/log/autoposter.log 2>&1

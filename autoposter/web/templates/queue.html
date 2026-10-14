@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Queue — AutoPoster Pro{% endblock %}
+{% block content %}
+<h1>Queue</h1>
+
+{% if request.query_params.get('created') %}<p class="success">Post created.{% endif %}
+{% if request.query_params.get('cancelled') %}<p class="success">Post cancelled.{% endif %}
+{% if request.query_params.get('paused') %}<p class="success">Post paused.{% endif %}
+{% if request.query_params.get('resumed') %}<p class="success">Post resumed.{% endif %}
+
+<form method="get" class="filters">
+    <select name="status">
+        <option value="">All statuses</option>
+        {% for s in ['draft','scheduled','publishing','published','failed','cancelled','missed','paused'] %}
+        <option value="{{ s }}" {% if status_filter == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="platform" placeholder="Platform" value="{{ platform_filter or '' }}">
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>When</th>
+            <th>Platforms</th>
+            <th>Body</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.id }}</td>
+            <td class="status-{{ post.status.value }}">{{ post.status.value }}</td>
+            <td>{{ format_in_zone(post.scheduled_at_utc, post.timezone) }}</td>
+            <td>{{ post.targets|map(attribute='platform')|join(', ') }}</td>
+            <td class="body-cell">{{ post.body[:80] }}{% if post.body|length > 80 %}…{% endif %}</td>
+            <td class="actions">
+                {% if post.status.value in ['scheduled','paused','missed','failed'] %}
+                <form method="post" action="/posts/{{ post.id }}/pause" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <button type="submit">Pause</button>
+                </form>
+                {% endif %}
+                {% if post.status.value == 'paused' %}
+                <form method="post" action="/posts/{{ post.id }}/resume" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <button type="submit">Resume</button>
+                </form>
+                {% endif %}
+                {% if post.status.value not in ['published','cancelled'] %}
+                <form method="post" action="/posts/{{ post.id }}/cancel" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <button type="submit" class="danger">Cancel</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="empty">No posts found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

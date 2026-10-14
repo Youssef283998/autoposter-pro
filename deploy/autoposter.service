@@ -1,0 +1,15 @@
+[Unit]
+Description=AutoPoster Pro scheduler
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/opt/autoposter
+ExecStart=/usr/bin/python3 -m autoposter.cli.main run
+Restart=on-failure
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

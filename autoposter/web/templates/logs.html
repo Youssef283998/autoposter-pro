@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Logs — AutoPoster Pro{% endblock %}
+{% block content %}
+<h1>Logs</h1>
+
+<pre class="log-viewer">
+{% for line in log_lines %}
+{{ line }}
+{% endfor %}
+</pre>
+{% endblock %}

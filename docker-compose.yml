@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  autoposter:
+    build: .
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env
+    restart: unless-stopped

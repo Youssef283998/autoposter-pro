@@ -1,0 +1,17 @@
+# Content templates with {variables} and spintax {a|b|c} variants.
+# Use with: autoposter post add --template promo
+
+promo:
+  body: "🔥 {product} is now {discount}% off! {cta}"
+  variables:
+    product: "AutoPoster Pro"
+    discount: "50"
+    cta: "Get it now: https://example.com"
+
+weekly:
+  body: "Weekly update: {highlight}"
+  variables:
+    highlight: "We shipped 3 new features"
+
+# Spintax example (randomized variants):
+# body: "{Hello|Hi|Hey} {there|everyone}, check out {our new|the latest} {product|tool}!"

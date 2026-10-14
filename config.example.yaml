@@ -1,0 +1,126 @@
+# AutoPoster Pro — BEHAVIOR CONFIG.
+# Secrets (tokens, keys, passwords) do NOT go here; they live in .env.
+# Copy to config.yaml and adjust. Every key shown with its default.
+
+# IANA timezone used when a post or import row does not specify one.
+default_timezone: "UTC"
+
+# How often the scheduler wakes up to claim due posts (seconds).
+tick_seconds: 5
+
+# ---------------------------------------------------------------------------
+# Retries — only retryable and rate-limited failures are retried.
+# ---------------------------------------------------------------------------
+retry:
+  max_attempts: 5
+  base_delay_seconds: 2.0
+  max_delay_seconds: 300.0
+  jitter: 0.25            # ±25% random spread on every delay
+
+# ---------------------------------------------------------------------------
+# Circuit breaker — a platform that keeps failing is paused so one dead API
+# cannot burn every retry slot. Other platforms keep publishing.
+# ---------------------------------------------------------------------------
+circuit_breaker:
+  failure_threshold: 5    # consecutive failures before the circuit opens
+  cooldown_seconds: 120.0 # how long before a half-open probe is allowed
+
+# ---------------------------------------------------------------------------
+# Duplicate prevention — refuse (block) or warn when a post's content hash
+# matches something already published to the same account inside the window.
+# ---------------------------------------------------------------------------
+dedup:
+  window_hours: 24
+  mode: "warn"            # "warn" | "block"
+
+# ---------------------------------------------------------------------------
+# Missed schedules — what to do when the machine was off at post time.
+# Backlogs are never burst-published.
+# ---------------------------------------------------------------------------
+missed:
+  post_late_within_minutes: 30   # still publish if we are inside this grace window
+  max_catchup_posts_per_tick: 1  # hard cap on late posts published per tick
+
+# ---------------------------------------------------------------------------
+# Per-platform caps. Conservative defaults; raise them only if your accounts
+# and each platform's terms allow it. delay_between_posts_seconds is a
+# randomized range applied between publishes to different accounts.
+# ---------------------------------------------------------------------------
+platforms:
+  telegram:
+    hourly: 30
+    daily: 500
+    delay_between_posts_seconds: [1.0, 4.0]
+  discord:
+    hourly: 30
+    daily: 500
+    delay_between_posts_seconds: [1.0, 4.0]
+  mastodon:
+    hourly: 60
+    daily: 1000
+    delay_between_posts_seconds: [2.0, 8.0]
+  bluesky:
+    hourly: 60
+    daily: 1000
+    delay_between_posts_seconds: [2.0, 8.0]
+  x:
+    hourly: 10
+    daily: 100
+    delay_between_posts_seconds: [5.0, 20.0]
+  linkedin:
+    hourly: 10
+    daily: 50
+    delay_between_posts_seconds: [5.0, 20.0]
+  fake:
+    hourly: null
+    daily: null
+    delay_between_posts_seconds: [0.0, 0.0]
+
+# ---------------------------------------------------------------------------
+# Quiet hours — posts whose scheduled time falls inside this window are
+# held until the window ends (per post timezone). Omit to disable.
+# ---------------------------------------------------------------------------
+# quiet_hours:
+#   start: "22:00"   # HH:MM, inclusive
+#   end: "07:00"     # HH:MM, exclusive
+
+# ---------------------------------------------------------------------------
+# Media handling. Files are copied into an internal store at schedule time so
+# deleting the original later cannot break a scheduled post.
+# ---------------------------------------------------------------------------
+media:
+  auto_resize: true         # downscale oversized images with Pillow
+  max_upload_mb: 25         # reject media larger than this (per-file)
+  keep_originals: true      # keep a copy of the pre-resize original
+  image_max_width: 2048     # longest edge after auto_resize
+  image_quality: 85         # JPEG/WebP quality when recompressing
+
+# ---------------------------------------------------------------------------
+# Optional alerts on publish failures and expired credentials.
+# Alerts are rate-limited per channel (min_interval_seconds) so a platform
+# outage cannot flood you.
+# ---------------------------------------------------------------------------
+# alerts:
+#   - kind: "telegram"
+#     min_interval_seconds: 300
+#   - kind: "smtp"
+#     min_interval_seconds: 600
+#   - kind: "webhook"
+#     min_interval_seconds: 300
+
+# Logging: DEBUG, INFO, WARNING, ERROR. json_lines emits one JSON object per
+# line to the log file (easy to ship to a log tool); secrets are redacted.
+log_level: "INFO"
+log_json: false
+
+# Where the database, media store, logs and lock file live.
+# Created by `autoposter init` if missing.
+data_dir: "~/.autoposter"
+
+# ---------------------------------------------------------------------------
+# Optional local web dashboard (`autoposter web`). Binds to localhost only
+# unless you change host AND set WEB_PASSWORD in .env.
+# ---------------------------------------------------------------------------
+web:
+  host: "127.0.0.1"
+  port: 8300

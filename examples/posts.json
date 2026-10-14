@@ -1,0 +1,29 @@
+[
+  {
+    "text": "Launching our new product today! 🚀 #launch #startup",
+    "platforms": "telegram",
+    "datetime": "2026-10-14 09:00",
+    "timezone": "UTC",
+    "media": "",
+    "thread_group": "",
+    "variants": ""
+  },
+  {
+    "text": "50% off all plans this weekend. Don't miss out! 🎉",
+    "platforms": "telegram,discord",
+    "datetime": "2026-10-14 12:00",
+    "timezone": "UTC",
+    "media": "",
+    "thread_group": "",
+    "variants": ""
+  },
+  {
+    "text": "Thanks for 10k followers! Here's what's next for us. 💙",
+    "platforms": "discord,mastodon",
+    "datetime": "2026-10-14 15:00",
+    "timezone": "UTC",
+    "media": "",
+    "thread_group": "",
+    "variants": ""
+  }
+]

@@ -1,0 +1,33 @@
+# Secrets and local state
+.env
+*.key
+.autoposter/
+data/
+*.db
+*.db-wal
+*.db-shm
+autoposter.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp

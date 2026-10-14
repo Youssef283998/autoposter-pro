@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Composer — AutoPoster Pro{% endblock %}
+{% block content %}
+<h1>Composer</h1>
+
+{% if request.query_params.get('error') %}<p class="error">Invalid datetime. Use YYYY-MM-DD HH:MM.{% endif %}
+
+<form method="post" action="/posts">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    <label for="body">Text</label>
+    <textarea id="body" name="body" rows="4" required></textarea>
+    <div id="char-count">0</div>
+
+    <label for="platforms">Platforms (comma-separated)</label>
+    <input type="text" id="platforms" name="platforms" placeholder="telegram, discord" required>
+
+    <label for="datetime">When</label>
+    <input type="text" id="datetime" name="datetime_str" placeholder="2026-10-14 09:00" required>
+
+    <label for="timezone">Timezone</label>
+    <input type="text" id="timezone" name="timezone" value="{{ default_timezone }}" required>
+
+    <button type="submit">Schedule Post</button>
+</form>
+
+<script>
+    const body = document.getElementById('body');
+    const counter = document.getElementById('char-count');
+    body.addEventListener('input', () => {
+        counter.textContent = body.value.length + ' characters';
+    });
+</script>
+{% endblock %}
